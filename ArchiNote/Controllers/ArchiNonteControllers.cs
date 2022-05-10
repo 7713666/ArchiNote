@@ -1,32 +1,81 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NoteApp.Domain.Core;
+using NoteApp.Infrastructure.Data;
+
 
 namespace ArchiNote.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class ArchiNonteControllers : ControllerBase
+[Route("api/[controller]")]
+        
+        
+public class ArchiNoteController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
+    NoteContext db;
+    public ArchiNoteController(NoteContext context)
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    private readonly ILogger<ArchiNonteControllers> _logger;
-
-    public ArchiNonteControllers(ILogger<ArchiNonteControllers> logger)
-    {
-        _logger = logger;
+        db  = context;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Note>>> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        if (db.Notes != null) return (await db.Notes.ToListAsync())!;
+        throw new InvalidOperationException();
+    }
+    
+    [HttpGet("{id}")]
+    public ObjectResult Get(int id)
+    {
+        object? note = null;
+        if (note == null)
+            return new ObjectResult(NotFound());
+        return new ObjectResult(note);
+
+    }
+    [HttpPost]
+    public async Task<ActionResult<Note>> Post(Note? work)
+    {
+        if (work == null)
+        {
+            return BadRequest();
+        }
+ 
+        db.Notes?.Add(work);
+        await db.SaveChangesAsync();
+        return Ok(work);
+    }
+    // PUT api/users/
+    [HttpPut]
+    public async Task<ActionResult<Note>> Put(Note? note)
+    {
+        if (note == null)
+        {
+            return BadRequest();
+        }
+        if (db.Notes != null && !db.Notes.Any(x => x != null && x.Id ==note.Id))
+        {
+            return NotFound();
+        }
+ 
+        db.Update(note);
+        await db.SaveChangesAsync();
+        return Ok(note);
+    }
+ 
+    // DELETE api/users/5
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Note>> Delete(int id)
+    {
+        Note? note = db.Notes?.Find(id);
+        if (note == null)
+        {
+            return NotFound();
+        }
+        db.Notes?.Remove(note);
+        await db.SaveChangesAsync();
+        return Ok(note);
     }
 }
+

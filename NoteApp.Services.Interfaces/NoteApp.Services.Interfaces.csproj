@@ -7,4 +7,8 @@
         <RootNamespace>IOrder</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\NoteApp.Domain.Core\NoteApp.Domain.Core.csproj" />
+    </ItemGroup>
+
 </Project>
