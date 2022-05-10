@@ -5,7 +5,7 @@ namespace NoteApp.Infrastructure.Data;
 
 public  class NoteContext : DbContext
 {
-    protected NoteContext(DbSet<Note?>? notes)
+    protected NoteContext(DbSet<Note>? notes)
     {
         Notes = notes;
     }
@@ -14,5 +14,6 @@ public  class NoteContext : DbContext
     {
     }
 
-    public DbSet<Note?>? Notes { get; set; }
+    public DbSet<Note>? Notes { get; set; }
+ 
 }

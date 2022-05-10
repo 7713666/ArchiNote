@@ -19,21 +19,20 @@ namespace NoteApp.Infrastructure.Data
             }
         }
         
-        public async Task<ActionResult<IEnumerable<Note>>> Get()
+        public async Task<IEnumerable<Note>> GetAsync()
         {
             return await db.Notes.ToListAsync();
         }
 
         // GET api/users/5
-       
-        public async Task<Note> Get(int id)
+       public async Task<Note> GetAsync(int id)
         {
             Note? note = await db.Notes.FirstOrDefaultAsync(x => x.Id == id);
             return note;
         }
 
         // POST api/users
-        public async Task<Note?> Post(Note? note)
+        public async Task<Note?> AddAsync(Note note)
         {
             db.Notes?.Add(note);
             await db.SaveChangesAsync();
@@ -41,7 +40,7 @@ namespace NoteApp.Infrastructure.Data
         }
         
         // PUT api/users/
-        public async Task<Note> Put(Note note)
+        public async Task<Note> UpdateAsync(Note note)
         {
             db.Update(note);
             await db.SaveChangesAsync();
@@ -49,13 +48,14 @@ namespace NoteApp.Infrastructure.Data
         }
         
         // DELETE api/users/5
-        public async Task<ActionResult<Note>> Delete(int id)
+        public async Task<Note?> DeleteAsync(int id)
         {
             Note? note = db.Notes.FirstOrDefault(x => x.Id == id);
-
+            if (note == null)
+                return null;
             db.Notes.Remove(note);
             await db.SaveChangesAsync();
-            return note;
+            return note;                           
 
         }
     }
