@@ -1,0 +1,15 @@
+/home/bakay/RiderProjects/ArchiNote/Configuration/bin/Debug/net6.0/Configuration.deps.json
+/home/bakay/RiderProjects/ArchiNote/Configuration/bin/Debug/net6.0/Configuration.dll
+/home/bakay/RiderProjects/ArchiNote/Configuration/bin/Debug/net6.0/Configuration.pdb
+/home/bakay/RiderProjects/ArchiNote/Configuration/bin/Debug/net6.0/NoteApp.Domain.Core.dll
+/home/bakay/RiderProjects/ArchiNote/Configuration/bin/Debug/net6.0/NoteApp.Domain.Core.pdb
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.csproj.AssemblyReference.cache
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.GeneratedMSBuildEditorConfig.editorconfig
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.AssemblyInfoInputs.cache
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.AssemblyInfo.cs
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.csproj.CoreCompileInputs.cache
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.csproj.CopyComplete
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.dll
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/refint/Configuration.dll
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/Configuration.pdb
+/home/bakay/RiderProjects/ArchiNote/Configuration/obj/Debug/net6.0/ref/Configuration.dll
