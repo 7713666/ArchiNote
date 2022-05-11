@@ -1,8 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NoteApp.Domain.Core;
 
-[Table("Note")]
 public class Note
 {
     public Note(int id, string? head, string? body)
