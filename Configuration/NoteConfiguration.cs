@@ -29,25 +29,31 @@ public class NoteConfiguration : IEntityTypeConfiguration<Note>
                 .HasColumnName("datetime")
                 .IsRequired()
                 .HasColumnType("datetime");
-        
     }
 }
-
 public class FileConfiguration : IEntityTypeConfiguration<File> 
 {
         public void Configure(EntityTypeBuilder<File> builder)
         {
                 builder.ToTable("files");
+                
+                builder.Property(c => c.Id)
+                        .HasColumnName("id")
+                        .IsRequired();
 
                 builder.Property(c => c.FileName)
                         .HasColumnName("file_name")
                         .IsRequired()
-                        .HasMaxLength(10);
+                        .HasMaxLength(30);
                 
-                builder.Property("file_dir")
-                        .HasColumnName("file_name")
+                builder.Property(c=> c.FileDir)
+                        .HasColumnName("file_dir")
                         .IsRequired()
-                        .HasColumnType(varchar(MAX));
-                        
+                        .HasMaxLength(65535);
+
+                builder.HasOne(e => e.Note)
+                        .WithMany(c => c.Files);
+                
         }
+        
 }

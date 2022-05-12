@@ -15,3 +15,5 @@
 /home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/obj/Debug/net6.0/ref/NoteApp.Infrastructure.Data.dll
 /home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/bin/Debug/net6.0/Configuration.dll
 /home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/bin/Debug/net6.0/Configuration.pdb
+/home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/bin/Debug/net6.0/NoteApp.Infrastructure.Data.runtimeconfig.json
+/home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/obj/Debug/net6.0/NoteApp.Infrastructure.Data.genruntimeconfig.cache

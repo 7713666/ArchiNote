@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "dFw74/o3FlH8/p+2wCq2xuyb6lwBr3uSgmo4Jv4QL9l9ANwpiiyB0N4Tk1EOO02ahVMvStBtuDHq5yJ15lL77g==",
+  "dgSpecHash": "rOyBCGhpYwBC/yK6RqEqI8cECdSqOTP+cMeMYBWplVt8zW7oyyeKmOJ/p5Uz9P0S7todPqZAo0N4hII4SRIW4A==",
   "success": true,
   "projectFilePath": "/home/bakay/RiderProjects/ArchiNote/ArchiNote/ArchiNote.csproj",
   "expectedPackageFiles": [
+    "/home/bakay/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.entityframeworkcore/6.0.4/microsoft.entityframeworkcore.6.0.4.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.4/microsoft.entityframeworkcore.abstractions.6.0.4.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.entityframeworkcore.analyzers/6.0.4/microsoft.entityframeworkcore.analyzers.6.0.4.nupkg.sha512",
+    "/home/bakay/.nuget/packages/microsoft.entityframeworkcore.design/6.0.1/microsoft.entityframeworkcore.design.6.0.1.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.entityframeworkcore.relational/6.0.1/microsoft.entityframeworkcore.relational.6.0.1.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "/home/bakay/.nuget/packages/microsoft.extensions.caching.abstractions/6.0.0/microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",

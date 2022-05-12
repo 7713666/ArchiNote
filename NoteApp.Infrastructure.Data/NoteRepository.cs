@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Domain.Core;
+using File = NoteApp.Domain.Core.File;
 
 
 namespace NoteApp.Infrastructure.Data
@@ -11,16 +12,22 @@ namespace NoteApp.Infrastructure.Data
         public NoteRepository(NoteContext context)
         {
             db = context;
-            if (!db.Notes.Any())
-            {
-                db.Notes.Add(new Note{ Head = "Дело №", Body = "Газета такая" });
+            if (!db.Notes.Any() || !db.Files.Any())
+            {   
+                db.Notes.Add(new Note 
+                    { Head = "Дело №", Body = "Газета такая"});
+                
+                db.Files.Add(new File 
+                    { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/"});
+                
                 db.SaveChanges();
             }
         }
-        
         public async Task<IEnumerable<Note>> GetAsync()
         {
-            return await db.Notes.ToListAsync();
+            return await db.Notes
+                .Include(x => x.Files)
+                .ToListAsync();
         }
 
         // GET api/users/5

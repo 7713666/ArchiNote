@@ -35,3 +35,5 @@
 /home/bakay/RiderProjects/ArchiNote/ArchiNote/obj/x64/Debug/net6.0/ArchiNote.pdb
 /home/bakay/RiderProjects/ArchiNote/ArchiNote/obj/x64/Debug/net6.0/ArchiNote.genruntimeconfig.cache
 /home/bakay/RiderProjects/ArchiNote/ArchiNote/obj/x64/Debug/net6.0/ref/ArchiNote.dll
+/home/bakay/RiderProjects/ArchiNote/ArchiNote/bin/x64/Debug/net6.0/Humanizer.dll
+/home/bakay/RiderProjects/ArchiNote/ArchiNote/bin/x64/Debug/net6.0/Microsoft.EntityFrameworkCore.Design.dll

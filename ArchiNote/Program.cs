@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore.Design;
 
 var builder = WebApplication.CreateBuilder(args);
 
