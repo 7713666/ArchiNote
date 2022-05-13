@@ -98,18 +98,6 @@ public class ArchiNoteController : ControllerBase
     [HttpPut]
     public async Task<ActionResult> PutAsync(NoteViewModel? note)
     {
-        var result = new NoteViewModel()
-        {
-            Id = note.Id,
-            Head = note.Head,
-            Body = note.Body,
-            Files = note.Files.Select(file => new FilesViewModel()
-            {
-                FileDir = file.FileDir,
-                FileName = file.FileName
-            }).ToList()
-        };
-        
         if (note == null)
         {
             return BadRequest();
@@ -118,28 +106,30 @@ public class ArchiNoteController : ControllerBase
         {
             return NotFound();
         }
-        return Ok (result);
+        var files = note.Files.Select(file => new NoteFile()
+        {
+            FileDir = file.FileDir,
+            FileName = file.FileName
+        }).ToList();
+        var noteNew = new Note(id:0, note.Head, note.Body, files);
+        await noteRepository.UpdateAsync(noteNew); 
+        return Ok (note);
     }
  
     // DELETE api/users/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete(NoteViewModel note)
     {
-        var notes = await noteRepository.DeleteAsync(0);
-        var result = notes.Select(note => new NoteViewModel()
-        {
-            Id = note.Id,
-            Head = note.Head,
-            Body = note.Body,
-            Files = note.Files.Select(file => new FilesViewModel()
-            {
-                FileDir = file.FileDir,
-                FileName = file.FileName
-            }).ToList()
-        }).Where(note => note.Id == id);
-        if (notes == null)
+        if (note == null)
             return null;
-        return Ok (result);
+        var files = note.Files.Select(file => new NoteFile()
+        {
+            FileDir = file.FileDir,
+            FileName = file.FileName
+        }).ToList();
+        var noteNew = new Note(id:0, note.Head, note.Body, files);
+        await noteRepository.DeleteAsync(noteNew);
+        return Ok (note);
     }
 }
 
