@@ -48,11 +48,14 @@ namespace NoteApp.Infrastructure.Data
         }
 
         // PUT api/users/
-        public async Task<Note> UpdateAsync(Note note)
+        public async Task<List<Note>>  UpdateAsync(Note? note, int id)
         {
-            db.Update(note);
+            var result = await db.Notes
+                .Include(x => x.Id == id)
+                .ToListAsync();
+            db.Update(result);
             await db.SaveChangesAsync();
-            return note;
+            return result;
         }
         
         // DELETE api/users/5

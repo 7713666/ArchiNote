@@ -96,25 +96,29 @@ public class ArchiNoteController : ControllerBase
     
     // PUT api/users/
     [HttpPut]
-    public async Task<ActionResult<Note>> PutAsync(NoteViewModel? note)
+    public async Task<ActionResult> PutAsync(NoteViewModel? note)
     {
+        var result = new NoteViewModel()
+        {
+            Id = note.Id,
+            Head = note.Head,
+            Body = note.Body,
+            Files = note.Files.Select(file => new FilesViewModel()
+            {
+                FileDir = file.FileDir,
+                FileName = file.FileName
+            }).ToList()
+        };
+        
         if (note == null)
         {
             return BadRequest();
         }
-        
         if (!db.Notes.Any(x => x.Id == note.Id))
         {
             return NotFound();
         }
-        var files = note.Files.Select(file => new NoteFile()
-        {
-            FileDir = file.FileDir,
-            FileName = file.FileName
-        }).ToList();
-        var noteNew = new Note(id:0, note.Head, note.Body, files);
-        await noteRepository.UpdateAsync(noteNew);
-        return Ok(note);
+        return Ok (result);
     }
  
     // DELETE api/users/5
