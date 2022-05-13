@@ -1,13 +1,12 @@
 using Configuration;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Domain.Core;
-using File = NoteApp.Domain.Core.File;
 
 namespace NoteApp.Infrastructure.Data;
 
 public  class NoteContext : DbContext
 {
-    protected NoteContext(DbSet<Note>? notes, DbSet<File>? files)
+    protected NoteContext(DbSet<Note>? notes, DbSet<NoteFile>? files)
     {
         Notes = notes;
         Files = files;
@@ -23,5 +22,5 @@ public  class NoteContext : DbContext
     }
 
     public DbSet<Note>? Notes { get; set; }
-    public DbSet<File>? Files { get; set; }
+    public DbSet<NoteFile>? Files { get; set; }
 }

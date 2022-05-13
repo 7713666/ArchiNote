@@ -2,7 +2,7 @@ namespace NoteApp.Domain.Core;
 
 public class Note
 {
-    public Note(int id, string? head, string? body, ICollection<File> files)
+    public Note(int id, string? head, string? body,  ICollection<NoteFile> files)
     {
         Id = id;
         Head = head;
@@ -10,7 +10,7 @@ public class Note
         Files = files;
     }
 
-    public Note(ICollection<File> files)
+    public Note(ICollection<NoteFile> files)
     {
         Files = files;
     }
@@ -26,12 +26,12 @@ public class Note
     public string? Head { get; set; }
     public string? Body { get; set; }
     public DateTime DateTime { get; set; } = DateTime.Now;
-    public ICollection<File> Files { get; set; }
+    public ICollection<NoteFile> Files { get; set; }
 }
 
-public class File
+public class NoteFile
 {
-    public File(int id, string? fileName, string? fileDir, Note note)
+    public NoteFile(int id, string? fileName, string? fileDir, Note note)
     {
         Id = id;
         FileName = fileName;
@@ -39,7 +39,7 @@ public class File
         Note = note;
     }
 
-    public File()
+    public NoteFile()
     {
     }
 

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using NoteApp.Domain.Core;
-using File = NoteApp.Domain.Core.File;
 
 
 namespace NoteApp.Infrastructure.Data
@@ -17,7 +17,7 @@ namespace NoteApp.Infrastructure.Data
                 db.Notes.Add(new Note 
                     { Head = "Дело №", Body = "Газета такая"});
                 
-                db.Files.Add(new File 
+                db.Files.Add(new NoteFile 
                     { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/"});
                 
                 db.SaveChanges();
@@ -31,20 +31,22 @@ namespace NoteApp.Infrastructure.Data
         }
 
         // GET api/users/5
-       public async Task<Note> GetAsync(int id)
+       public async Task<List<Note>> GetAsync(int id)
         {
-            Note? note = await db.Notes.FirstOrDefaultAsync(x => x.Id == id);
-            return note;
+            var result = await db.Notes
+                .Include(x => x.Id == id)
+                .ToListAsync();
+            return result;
         }
 
         // POST api/users
         public async Task<Note?> AddAsync(Note note)
         {
-            db.Notes?.Add(note);
+            await db.Notes.AddAsync(note);
             await db.SaveChangesAsync();
             return note;
         }
-        
+
         // PUT api/users/
         public async Task<Note> UpdateAsync(Note note)
         {
@@ -54,15 +56,14 @@ namespace NoteApp.Infrastructure.Data
         }
         
         // DELETE api/users/5
-        public async Task<Note?> DeleteAsync(int id)
+        public async Task<List<Note>> DeleteAsync(int id)
         {
-            Note? note = db.Notes.FirstOrDefault(x => x.Id == id);
-            if (note == null)
-                return null;
-            db.Notes.Remove(note);
-            await db.SaveChangesAsync();
-            return note;                           
-
+            var result = await db.Notes
+                .Include(x => x.Id == id)
+                .ToListAsync();
+                db.Remove(result);
+                await db.SaveChangesAsync();
+                return result;
         }
     }
 }   

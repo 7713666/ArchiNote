@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NoteApp.Domain.Core;
-using File = NoteApp.Domain.Core.File;
 
 namespace Configuration;
 
@@ -31,9 +30,9 @@ public class NoteConfiguration : IEntityTypeConfiguration<Note>
                 .HasColumnType("datetime");
     }
 }
-public class FileConfiguration : IEntityTypeConfiguration<File> 
+public class FileConfiguration : IEntityTypeConfiguration<NoteFile> 
 {
-        public void Configure(EntityTypeBuilder<File> builder)
+        public void Configure(EntityTypeBuilder<NoteFile> builder)
         {
                 builder.ToTable("files");
                 
