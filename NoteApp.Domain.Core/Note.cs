@@ -1,6 +1,6 @@
 namespace NoteApp.Domain.Core;
 
-public class Note
+public class Note : IDisposable
 {
     public Note(int id, string? head, string? body,  ICollection<NoteFile> files)
     {
@@ -27,6 +27,10 @@ public class Note
     public string? Body { get; set; }
     public DateTime DateTime { get; set; } = DateTime.Now;
     public ICollection<NoteFile> Files { get; set; }
+
+    public void Dispose()
+    {
+    }
 }
 
 public class NoteFile

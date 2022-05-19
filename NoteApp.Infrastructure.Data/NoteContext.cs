@@ -21,6 +21,6 @@ public  class NoteContext : DbContext
     {
     }
 
-    public DbSet<Note>? Notes { get; set; }
+    public  DbSet<Note>? Notes { get; set; }
     public DbSet<NoteFile>? Files { get; set; }
 }

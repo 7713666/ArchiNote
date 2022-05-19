@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using NoteApp.Domain.Core;
 
 
@@ -40,27 +39,27 @@ namespace NoteApp.Infrastructure.Data
         }
 
         // POST api/users
-        public async Task<Note?> AddAsync(Note note)
+        public async Task<List<Note>> AddAsync(Note note)
         {
-            await db.Notes.AddAsync(note);
-            await db.SaveChangesAsync();
-            return note;
+            return await db.Notes
+                .Include(x => x.Files)
+                .ToListAsync();
         }
 
         // PUT api/users/
-        public async Task<Note?> UpdateAsync(Note note)
+        public async Task<List<Note>> UpdateAsync(Note note)
         {
-            await db.Notes.Update(note);
-            await db.SaveChangesAsync();
-            return note;
+            return await db.Notes
+                .Include(x => x.Files)
+                .ToListAsync();
         }
         
         // DELETE api/users/5
-        public async Task <Note?> DeleteAsync(Note note)
+        public async Task<List<Note>> DeleteAsync(Note note)
         {
-            await db.Notes.Delete(note);
-            await db.SaveChangesAsync();
-            return note;
+            return await db.Notes
+                .Include(x => x.Files)
+                .ToListAsync();;
         }
     }
 }   

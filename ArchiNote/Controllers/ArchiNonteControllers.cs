@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data;
 
@@ -12,8 +11,8 @@ public class NoteViewModel
     // [Required]
     // [MaxLength(30)]
     public int Id { get; set; } 
-    public string Head { get; set; }
-    public string Body { get; set; }
+    public string? Head { get; set; }
+    public string? Body { get; set; }
     public List<FilesViewModel> Files { get; set; }
 }
 
@@ -34,7 +33,7 @@ public class ArchiNoteController : ControllerBase
 
     public ArchiNoteController(NoteContext context)
     {
-        db  = context;
+        db = context;
         noteRepository = new NoteRepository(context);
     }
 
@@ -72,10 +71,9 @@ public class ArchiNoteController : ControllerBase
                 FileName = file.FileName
             }).ToList()
         }).Where(note => note.Id == id);
-        if (result == null)
-            return NotFound();
-        return Ok (result);
+        return Ok(result);
     }
+
     [HttpPost]
     public async Task<ActionResult<Note>> PostAsync(NoteViewModel? note)
     {
@@ -89,47 +87,40 @@ public class ArchiNoteController : ControllerBase
             FileDir = file.FileDir,
             FileName = file.FileName
         }).ToList();
-        var noteNew = new Note(id:0, note.Head, note.Body, files);
-        await noteRepository.AddAsync(noteNew); 
+        var noteNew = new Note(id: 0, note.Head, note.Body, files);
+        await noteRepository.AddAsync(noteNew);
         return Ok(note);
-    }    
-    
+    }
+
     // PUT api/users/
     [HttpPut]
-    public async Task<ActionResult> PutAsync(NoteViewModel? note)
+    public async Task<ActionResult> UpdateNote(NoteViewModel note)
     {
-        if (note == null)
+        var result = await db.Notes
+            .FirstOrDefaultAsync(n => n.Id == note.Id);
+
+        if (result != null)
         {
-            return BadRequest();
+            db.Update(result);
+            await db.SaveChangesAsync();
         }
-        if (!db.Notes.Any(x => x.Id == note.Id))
-        {
-            return NotFound();
-        }
-        var files = note.Files.Select(file => new NoteFile()
-        {
-            FileDir = file.FileDir,
-            FileName = file.FileName
-        }).ToList();
-        var noteNew = new Note(id:0, note.Head, note.Body, files);
-        await noteRepository.UpdateAsync(noteNew); 
-        return Ok (note);
+
+        return Ok();
     }
- 
+
     // DELETE api/users/5
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(NoteViewModel note)
+    [HttpDelete]
+    public async Task<ActionResult> DeleteAsync(NoteViewModel note)
     {
-        if (note == null)
-            return null;
-        var files = note.Files.Select(file => new NoteFile()
+        var result = await db.Notes
+            .FirstOrDefaultAsync(n => n.Id == note.Id);
+        if (result != null)
         {
-            FileDir = file.FileDir,
-            FileName = file.FileName
-        }).ToList();
-        var noteNew = new Note(id:0, note.Head, note.Body, files);
-        await noteRepository.DeleteAsync(noteNew);
-        return Ok (note);
+            db.Remove(result);
+            await db.SaveChangesAsync();
+        }
+
+        return Ok();
     }
 }
 
