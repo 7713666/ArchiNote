@@ -12,12 +12,11 @@ namespace NoteApp.Infrastructure.Data
         {
             db = context;
             if (!db.Notes.Any() || !db.Files.Any())
-            {   
-                db.Notes.Add(new Note 
-                    { Head = "Дело №", Body = "Газета такая"});
+            {
+                var newNote = new Note { Head = "Дело №", Body = "Газета такая" };
+                db.Notes.Add(newNote);
                 
-                db.Files.Add(new NoteFile 
-                    { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/"});
+                db.Files.Add(new NoteFile { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/", Note = newNote});
                 
                 db.SaveChanges();
             }
@@ -41,14 +40,18 @@ namespace NoteApp.Infrastructure.Data
         // POST api/users
         public async Task<List<Note>> AddAsync(Note note)
         {
+            db.Notes?.Add(note);
+            await db.SaveChangesAsync();
             return await db.Notes
                 .Include(x => x.Files)
                 .ToListAsync();
         }
-
+    
         // PUT api/users/
         public async Task<List<Note>> UpdateAsync(Note note)
         {
+            db.Notes?.Update(note);
+            await db.SaveChangesAsync();
             return await db.Notes
                 .Include(x => x.Files)
                 .ToListAsync();
@@ -56,7 +59,7 @@ namespace NoteApp.Infrastructure.Data
         
         // DELETE api/users/5
         public async Task<List<Note>> DeleteAsync(Note note)
-        {
+        {   
             return await db.Notes
                 .Include(x => x.Files)
                 .ToListAsync();;

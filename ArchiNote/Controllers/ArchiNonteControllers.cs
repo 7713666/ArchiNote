@@ -94,17 +94,16 @@ public class ArchiNoteController : ControllerBase
 
     // PUT api/users/
     [HttpPut]
-    public async Task<ActionResult> UpdateNote(NoteViewModel note)
+    public async Task<ActionResult<Note>> UpdateAsync(NoteViewModel? note)
     {
         var result = await db.Notes
             .FirstOrDefaultAsync(n => n.Id == note.Id);
-
-        if (result != null)
+        if (result == null)
         {
-            db.Update(result);
-            await db.SaveChangesAsync();
+            return BadRequest();
         }
-
+        await noteRepository.UpdateAsync(result);
+        await db.SaveChangesAsync();
         return Ok();
     }
 

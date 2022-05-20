@@ -35,7 +35,7 @@ public class Note : IDisposable
 
 public class NoteFile
 {
-    public NoteFile(int id, string? fileName, string? fileDir, Note note)
+    public NoteFile(int id, string? fileName, string? fileDir, Note? note)
     {
         Id = id;
         FileName = fileName;
@@ -47,9 +47,9 @@ public class NoteFile
     {
     }
 
-
     public int Id { get; set; }
     public string? FileName { get; set; }
     public string? FileDir { get; set; }
-    public Note Note { get; set; }
+    public int NoteId { get; set; }
+    public Note? Note { get; set; }
 }

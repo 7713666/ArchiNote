@@ -51,8 +51,9 @@ public class FileConfiguration : IEntityTypeConfiguration<NoteFile>
                         .HasMaxLength(65535);
 
                 builder.HasOne(e => e.Note)
-                        .WithMany(c => c.Files);
-                
+                        .WithMany(c => c.Files)
+                        .HasForeignKey(c => c.NoteId);
+
         }
         
 }
