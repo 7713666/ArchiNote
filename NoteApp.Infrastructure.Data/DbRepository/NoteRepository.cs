@@ -4,7 +4,7 @@ using NoteApp.Domain.Core;
 
 namespace NoteApp.Infrastructure.Data
 {
-    public class NoteRepository 
+    public class NoteRepository : INoteRepository
     {
         NoteContext db;
 
@@ -21,6 +21,15 @@ namespace NoteApp.Infrastructure.Data
                 db.SaveChanges();
             }
         }
+        
+        public async Task<Note> GetAsync(int id)
+        {
+            var result = await db.Notes
+                .Include(x => x.Files)
+                .FirstOrDefaultAsync(x=> x.Id == id);
+            return result;
+        }
+        
         public async Task<IEnumerable<Note>> GetAsync()
         {
             return await db.Notes
@@ -29,13 +38,7 @@ namespace NoteApp.Infrastructure.Data
         }
 
         // GET api/users/5
-       public async Task<List<Note>> GetAsync(int id)
-        {
-            var result = await db.Notes
-                .Include(x => x.Id == id)
-                .ToListAsync();
-            return result;
-        }
+ 
 
         // POST api/users
         public async Task<List<Note>> AddAsync(Note note)

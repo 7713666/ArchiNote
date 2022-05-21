@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Design;
+using NoteApp.Services.Interfaces;
+using NoteApp.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,11 @@ builder.Services.AddDbContext<NoteContext>(
         .EnableSensitiveDataLogging()
         .EnableDetailedErrors());
 
+// builder.Services.AddSingleton()
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<INoteService, NoteService>();
+// builder.Services.AddScoped<INoteRepository, CacheNoteRepository>();
+// builder.Services.AddScoped<NoteRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

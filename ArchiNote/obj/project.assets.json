@@ -377,6 +377,20 @@
         "runtime": {
           "bin/placeholder/NoteApp.Infrastructure.Data.dll": {}
         }
+      },
+      "NoteApp.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "NoteApp.Domain.Core": "1.0.0",
+          "NoteApp.Infrastructure.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NoteApp.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NoteApp.Services.dll": {}
+        }
       }
     }
   },
@@ -949,6 +963,11 @@
       "type": "project",
       "path": "../NoteApp.Infrastructure.Data/NoteApp.Infrastructure.Data.csproj",
       "msbuildProject": "../NoteApp.Infrastructure.Data/NoteApp.Infrastructure.Data.csproj"
+    },
+    "NoteApp.Services/1.0.0": {
+      "type": "project",
+      "path": "../NoteApp.Services/NoteApp.Services.csproj",
+      "msbuildProject": "../NoteApp.Services/NoteApp.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -956,6 +975,7 @@
       "Microsoft.EntityFrameworkCore >= 6.0.4",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.1",
       "NoteApp.Infrastructure.Data >= 1.0.0",
+      "NoteApp.Services >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -986,6 +1006,9 @@
           "projectReferences": {
             "/home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/NoteApp.Infrastructure.Data.csproj": {
               "projectPath": "/home/bakay/RiderProjects/ArchiNote/NoteApp.Infrastructure.Data/NoteApp.Infrastructure.Data.csproj"
+            },
+            "/home/bakay/RiderProjects/ArchiNote/NoteApp.Services/NoteApp.Services.csproj": {
+              "projectPath": "/home/bakay/RiderProjects/ArchiNote/NoteApp.Services/NoteApp.Services.csproj"
             }
           }
         }

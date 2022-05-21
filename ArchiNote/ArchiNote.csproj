@@ -17,6 +17,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\NoteApp.Infrastructure.Data\NoteApp.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\NoteApp.Services\NoteApp.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Validators" />
     </ItemGroup>
 
 </Project>
