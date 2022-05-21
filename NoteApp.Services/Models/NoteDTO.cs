@@ -1,6 +1,6 @@
 namespace NoteApp.Services.Models;
 
-public class NoteDTO
+public class NoteDto
 {
     public int Id { get; set; }
     public string? Head { get; set; }

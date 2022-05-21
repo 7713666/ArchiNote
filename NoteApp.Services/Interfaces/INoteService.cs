@@ -5,6 +5,8 @@ namespace NoteApp.Services.Interfaces;
 
 public interface INoteService
 {
-    Task<NoteDTO> GetNoteAsync(int id);
-    Task AddNoteAsync(NoteDTO note);
+    Task<NoteDto> GetNoteAsync(int id);
+    Task AddNoteAsync(NoteDto note);
+    Task UpdateNoteAsync(NoteDto note);
+    Task<NoteDto> DeleteNoteAsync(int id);
 }

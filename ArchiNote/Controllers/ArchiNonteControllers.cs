@@ -48,7 +48,7 @@ public class ArchiNoteController : ApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<Note>> PostAsync(NoteDTO? note)
+    public async Task<ActionResult<Note>> PostAsync(NoteDto? note)
     {
         if (note == null)
         {
@@ -61,21 +61,14 @@ public class ArchiNoteController : ApiController
 
     // PUT api/users/
     [HttpPut]
-    public async Task<ActionResult<Note>> UpdateAsync(NoteDTO? note)
+    public async Task<ActionResult<Note>> PutAsync(NoteDto? note)
     {
         if (note == null)
         {
             return BadRequest();
         }
-
-        var files = note.Files.Select(file => new NoteFile()
-        {
-            Id = file.Id,
-            FileDir = file.FileDir,
-            FileName = file.FileName
-        }).ToList();
-        var noteNew = new Note(note.Id, note.Head, note.Body, files);
-        await _noteRepository.UpdateAsync(noteNew);
+        
+        await _noteService.UpdateNoteAsync(note);
         return Ok(note);
     }
 
@@ -83,15 +76,7 @@ public class ArchiNoteController : ApiController
     [HttpDelete]
     public async Task<ActionResult> DeleteAsync(int id)
     {
-        var result = await Db.Notes
-            .Include(x=>x.Files)
-            .FirstOrDefaultAsync(n => n.Id == id);
-        if (result != null)
-        {
-            Db.Remove(result);
-            await Db.SaveChangesAsync();
-        }
-
+        await _noteService.DeleteNoteAsync(id);
         return Ok();
     }
 }

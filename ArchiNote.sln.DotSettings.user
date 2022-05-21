@@ -1,0 +1,10 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/bakay/.cache/JetBrains/Rider2022.1/resharper-host/temp/Rider/vAny/CoverageData/_ArchiNote.-1371864472/Snapshot/snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d246b211_002D5b24_002D4abf_002Dbd46_002D031869515a75/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddNoteAsync_Should_ReturnNote_When_AddCalled" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::B4E9B136-BEB2-49D5-9B26-5DEB368B29BF::net6.0::Tests.NoteApp.Services.Tests&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::B4E9B136-BEB2-49D5-9B26-5DEB368B29BF::net6.0::Tests.NoteApp.Services.NoteServiceTests.AddNoteAsync_Should_ReturnNote_When_AddCalled&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::B4E9B136-BEB2-49D5-9B26-5DEB368B29BF::net6.0::Tests.NoteApp.Services.NoteServiceTests&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::B4E9B136-BEB2-49D5-9B26-5DEB368B29BF::net6.0::Tests.NoteApp.Services.NoteServiceIntegrationTests.AddNoteAsync_Should_ReturnNote_When_AddCalled&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

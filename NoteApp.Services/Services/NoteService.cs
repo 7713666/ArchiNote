@@ -14,24 +14,24 @@ public class NoteService : INoteService
         _noteRepository = noteRepository;
     }
 
-    public async Task<NoteDTO> GetNoteAsync(int id)
+    public async Task<NoteDto> GetNoteAsync(int id)
     {
-        var note = await _noteRepository.GetAsync(id); 
-        return new NoteDTO
-        {                                                            
-            Id = note.Id,                                            
-            Head = note.Head,                                        
-            Body = note.Body,                                        
+        var note = await _noteRepository.GetAsync(id);
+        return new NoteDto
+        {
+            Id = note.Id,
+            Head = note.Head,
+            Body = note.Body,
             Files = note.Files.Select(file => new FileDTO
             {
                 Id = file.Id,
-                FileDir = file.FileDir,                              
-                FileName = file.FileName                             
-            }).ToList()                                              
+                FileDir = file.FileDir,
+                FileName = file.FileName
+            }).ToList()
         };
     }
 
-    public async Task AddNoteAsync(NoteDTO note)
+    public async Task AddNoteAsync(NoteDto note)
     {
         var files = note.Files.Select(file => new NoteFile()
         {
@@ -39,6 +39,35 @@ public class NoteService : INoteService
             FileName = file.FileName
         }).ToList();
         var noteNew = new Note(id: 0, note.Head, note.Body, files);
-        await _noteRepository.AddAsync(noteNew);                     
+        await _noteRepository.AddAsync(noteNew);
+    }
+
+    public async Task UpdateNoteAsync(NoteDto note)
+    {
+        var files = note.Files.Select(file => new NoteFile()
+        {
+            Id = file.Id,
+            FileDir = file.FileDir,
+            FileName = file.FileName
+        }).ToList();
+        var noteNew = new Note(note.Id, note.Head, note.Body, files);
+        await _noteRepository.UpdateAsync(noteNew);
+    }
+
+    public async Task<NoteDto> DeleteNoteAsync(int id)
+    {
+        var note = await _noteRepository.DeleteAsync(id);
+        return new NoteDto
+        {
+            Id = note.Id,
+            Head = note.Head,
+            Body = note.Body,
+            Files = note.Files.Select(file => new FileDTO
+            {
+                Id = file.Id,
+                FileDir = file.FileDir,
+                FileName = file.FileName
+            }).ToList()
+        };
     }
 }

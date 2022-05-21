@@ -11,15 +11,15 @@ namespace NoteApp.Infrastructure.Data
         public NoteRepository(NoteContext context)
         {
             db = context;
-            if (!db.Notes.Any() || !db.Files.Any())
-            {
-                var newNote = new Note { Head = "Дело №", Body = "Газета такая" };
-                db.Notes.Add(newNote);
-                
-                db.Files.Add(new NoteFile { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/", Note = newNote});
-                
-                db.SaveChanges();
-            }
+            // if (!db.Notes.Any() || !db.Files.Any())
+            // {
+            //     var newNote = new Note { Head = "Дело №", Body = "Газета такая" };
+            //     db.Notes.Add(newNote);
+            //     
+            //     db.Files.Add(new NoteFile { FileName = "multfilm_lyagushka_32117.jpg", FileDir = "/home/bakay/Pictures/", Note = newNote});
+            //     
+            //     db.SaveChanges();
+            // }
         }
         
         public async Task<Note> GetAsync(int id)
@@ -59,13 +59,19 @@ namespace NoteApp.Infrastructure.Data
                 .Include(x => x.Files)
                 .ToListAsync();
         }
-        
+
         // DELETE api/users/5
-        public async Task<List<Note>> DeleteAsync(Note note)
-        {   
-            return await db.Notes
+        public async Task<Note?> DeleteAsync(int id)
+        {
+            var note = await db.Notes
                 .Include(x => x.Files)
-                .ToListAsync();;
+                .FirstOrDefaultAsync(x=> x.Id == id);
+            if (note != null)
+            {
+                db.Notes?.Remove(note);
+                await db.SaveChangesAsync();    
+            }
+            return note;
         }
     }
 }   

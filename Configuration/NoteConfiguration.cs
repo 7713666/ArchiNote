@@ -52,8 +52,7 @@ public class FileConfiguration : IEntityTypeConfiguration<NoteFile>
 
                 builder.HasOne(e => e.Note)
                         .WithMany(c => c.Files)
-                        .HasForeignKey(c => c.NoteId)
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey(c => c.NoteId);
 
         }
         

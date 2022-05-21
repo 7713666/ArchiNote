@@ -10,6 +10,13 @@ public class Note : IDisposable
         Files = files;
     }
 
+    public Note(int id, string noteHead, string noteBody)
+    {
+        Id = id;
+        Head = noteHead;
+        Body = noteBody;
+    }
+    
     public Note(ICollection<NoteFile> files)
     {
         Files = files;
@@ -18,9 +25,8 @@ public class Note : IDisposable
     public Note()
     {
     }
-    public Note(int id, string noteHead, string noteBody)
-    {
-    }
+    
+
 
     public int Id { get; set; }
     public string? Head { get; set; }
