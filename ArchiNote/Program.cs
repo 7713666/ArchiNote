@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Design;
+using NoteApp.Infrastructure.Data.Interfaces;
 using NoteApp.Services.Interfaces;
 using NoteApp.Services.Services;
 

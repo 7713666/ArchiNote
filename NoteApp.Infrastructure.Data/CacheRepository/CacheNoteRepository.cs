@@ -1,4 +1,5 @@
 using NoteApp.Domain.Core;
+using NoteApp.Infrastructure.Data.Interfaces;
 
 namespace NoteApp.Infrastructure.Data;
 

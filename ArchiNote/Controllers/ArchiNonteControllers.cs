@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data;
+using NoteApp.Infrastructure.Data.Interfaces;
 using NoteApp.Services.Interfaces;
 using NoteApp.Services.Models;
 

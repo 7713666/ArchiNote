@@ -1,6 +1,6 @@
 using NoteApp.Domain.Core;
 
-namespace NoteApp.Infrastructure.Data;
+namespace NoteApp.Infrastructure.Data.Interfaces;
 
 public interface INoteRepository
 {

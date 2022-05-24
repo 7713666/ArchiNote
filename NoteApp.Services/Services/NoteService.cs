@@ -1,5 +1,6 @@
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data;
+using NoteApp.Infrastructure.Data.Interfaces;
 using NoteApp.Services.Interfaces;
 using NoteApp.Services.Models;
 
@@ -70,4 +71,6 @@ public class NoteService : INoteService
             }).ToList()
         };
     }
+
+
 }

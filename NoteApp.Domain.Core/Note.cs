@@ -37,6 +37,8 @@ public class Note : IDisposable
     public void Dispose()
     {
     }
+
+
 }
 
 public class NoteFile

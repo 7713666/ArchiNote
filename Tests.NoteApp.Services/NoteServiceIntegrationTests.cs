@@ -1,15 +1,17 @@
+using System.Collections;
 using System.Reflection.Metadata.Ecma335;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data;
+using NoteApp.Infrastructure.Data.Interfaces;
 using NoteApp.Services.Models;
 using NoteApp.Services.Services;
 
 namespace Tests.NoteApp.Services;
 
-/*public class NoteRepositoryStub : INoteRepository
+public class NoteRepositoryStub : INoteRepository
 {
     public Task<IEnumerable<Note>> GetAsync()
     {
@@ -26,10 +28,12 @@ namespace Tests.NoteApp.Services;
         throw new NotImplementedException();
     }
 
-    public Task<List<Note>> UpdateAsync(Note note)
+    public async Task<List<Note>> UpdateAsync(Note note)
     {
         throw new NotImplementedException();
-    }
+        
+    }    
+       
 
     public async Task<Note?> DeleteAsync(int id)
     {
@@ -38,22 +42,11 @@ namespace Tests.NoteApp.Services;
 }
 
 
-
-
-
-/// <summary>
-/// ////////////////////////////////////////////////////////////////////////
-/// </summary>
 public class NoteServiceTests
 {
     private NoteService _service;
     private Mock<INoteRepository> _repositoryMock;
 
-    public NoteServiceTests(NoteService service, Mock<INoteRepository> repositoryMock)
-    {
-        _service = service;
-        _repositoryMock = repositoryMock;
-    }
 
     [SetUp]
     public void Setup()
@@ -63,7 +56,7 @@ public class NoteServiceTests
     }
     
     [Test]
-    public async Task AddNoteAsync_Should_ReturnNote_When_AddCalled()
+    public async Task DeleteNoteAsync_Should_ReturnNote_When_DeleteCalled()
     {
         _repositoryMock.Setup(x => x.DeleteAsync(It.IsAny<int>()))
             .ReturnsAsync(new Note(1, "adwwd", "awdawd", new List<NoteFile>()));
@@ -71,22 +64,22 @@ public class NoteServiceTests
         var actual = await _service.DeleteNoteAsync(1);
         
         actual.Should().NotBeNull();
-        // Assert.IsNotNull(actual);
+        
     }
     
     [Test]
-    public async Task AddNoteAsync_Should_ReturnNote_When_NoFilesProvided()
+    public async Task DeleteNoteAsync_Should_ReturnNote_When_NoFilesProvided()
     {
         _repositoryMock.Setup(x => x.DeleteAsync(It.IsAny<int>()))
             .ReturnsAsync(new Note(1, "adwwd", "awdawd", new List<NoteFile>()));
         
         var actual = await _service.DeleteNoteAsync(1);
 
-        actual.Files.Should().NotBeEmpty();
+        actual.Files.Should().BeEmpty();
     }
     
     [Test]
-    public async Task AddNoteAsync_Should_ReturnNote_When_HasFiles()
+    public async Task DeleteNoteAsync_Should_ReturnNote_When_HasFiles()
     {
         var note = new Note(1, "adwwd", "awdawd", new List<NoteFile>()
         {
@@ -106,14 +99,41 @@ public class NoteServiceTests
                 x => x.Id == 2);
         Assert.That(actual.Files.Count, Is.EqualTo(2));
     }
-}*/
+    
+    
+    
+    [Test]
+    public async Task GetNoteAsync_Should_ReturnNote_When_GetCalled_By_Id()
+    {
+        _repositoryMock.Setup(x => x.GetAsync(It.IsAny<int>()))
+            .ReturnsAsync(new Note(1, "adwwd", "awdawd", new List<NoteFile>()));
+        
+        var actual = await _service.GetNoteAsync(1);
+        
+        actual.Should().NotBeNull();
+
+    }    
+    
+    [Test]
+    
+    public async Task GetNoteAsync_Should_ReturnNote_When_Get_All_List()
+    {
+        _repositoryMock.Setup(m => m.GetAsync(It.IsAny<IEnumerable<Note>>()))
+            .Returns(() => new List <Note>());
+           
+            
+        var actual = await _service.GetNoteAsync(1);
+        
+        actual.Should().NotBeNull();
+    }
+}
 
 /// <summary>
 /// /////////////////////////////////////////////////////////////////////////////////////////////////
 /// </summary>
 
 
-[NonParallelizable]
+/*[NonParallelizable]
 public class NoteServiceIntegrationTests
 {
     private NoteService _service;
@@ -132,9 +152,9 @@ public class NoteServiceIntegrationTests
     }
 
     [TearDown]
-    public void TearDown()
+    public async Task TearDown()
     {
-        _context.Database.EnsureDeletedAsync();
+        await _context.Database.EnsureDeletedAsync();
     }
 
     [Test]
@@ -142,45 +162,45 @@ public class NoteServiceIntegrationTests
     {
         await _context.Notes.AddAsync(new Note(1, "wadaw", "adwdw"));
         await _context.SaveChangesAsync();
-
+    
         var actual = await _service.DeleteNoteAsync(1);
-
+    
         Assert.IsNotNull(actual);
     }
-
+    
     [Test]
     public async Task UpdateNoteAsync_Should_ReturnNote_When_UpdateCalled()
     {
         await _context.Notes.AddAsync(new Note(1, "wadaw", "adwdw", null));
         await _context.SaveChangesAsync();
-
+    
         var note = await _context.Notes.FindAsync(1);
         note.Head = "1awdwad";
         note.Body = "wadawdwad";
         note.Files = null;
-
+    
         _context.Notes.Update(note);
         await _context.SaveChangesAsync();
-
+    
         var actual = await _service.DeleteNoteAsync(1);
-
+    
         actual.Id.Should().BePositive();
         actual.Head.Should().Be("1awdwad");
         actual.Body.Should().Be("wadawdwad");
         actual.Files.Should().BeEmpty();
     }
-
+    
     [Test]
     public async Task DeleteNoteAsync_Should_ReturnNote_When_Is_No_Need_Anymore()
     {
         await _context.Notes.AddAsync(new Note(1, "wadaw", "adwdw"));
         await _context.Notes.AddAsync(new Note(2, "asdwadaw", "adsssswdw"));
         await _context.Notes.AddAsync(new Note(3, "wad777aw", "a666dwdw"));
-
+    
         await _context.SaveChangesAsync();
-
+    
         var actual = await _service.DeleteNoteAsync(2);
-
+    
         actual.Id.Should().Be(2);
         actual.Head.Should().Be("asdwadaw");
         actual.Body.Should().Be("adsssswdw");
@@ -192,11 +212,11 @@ public class NoteServiceIntegrationTests
         await _context.Notes.AddAsync(new Note(1, "wadaw", "adwdw"));
         await _context.Notes.AddAsync(new Note(2, "asdwadaw", "adsssswdw"));
         await _context.Notes.AddAsync(new Note(3, "wad777aw", "a666dwdw"));
-
+    
         await _context.SaveChangesAsync();
-
+    
         var actual = await _context.Notes.FindAsync(3);
-
+    
         actual.Id.Should().Be(3);
         actual.Head.Should().Be("wad777aw");
         actual.Body.Should().Be("a666dwdw");
@@ -224,4 +244,4 @@ public class NoteServiceIntegrationTests
         }
 
     }
-}
+}*/
