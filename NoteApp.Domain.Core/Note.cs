@@ -2,7 +2,7 @@ namespace NoteApp.Domain.Core;
 
 public class Note : IDisposable
 {
-    public Note(int id, string? head, string? body,  ICollection<NoteFile> files)
+    public Note(int id, string? head, string? body,  ICollection<NoteFile>? files)
     {
         Id = id;
         Head = head;
@@ -17,7 +17,7 @@ public class Note : IDisposable
         Body = noteBody;
     }
     
-    public Note(ICollection<NoteFile> files)
+    public Note(ICollection<NoteFile>? files)
     {
         Files = files;
     }
@@ -32,7 +32,7 @@ public class Note : IDisposable
     public string? Head { get; set; }
     public string? Body { get; set; }
     public DateTime DateTime { get; set; } = DateTime.Now;
-    public ICollection<NoteFile> Files { get; set; }
+    public ICollection<NoteFile>? Files { get; set; }
 
     public void Dispose()
     {

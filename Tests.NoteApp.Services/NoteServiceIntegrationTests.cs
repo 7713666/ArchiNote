@@ -87,14 +87,14 @@ public class NoteServiceTests
     {
         _repositoryMock.Setup(
             r => r.GetListAsync()
-        ).ReturnsAsync(new List<Note> { new Note( 1, "1asdas", "asdasdasad", new List<NoteFile>()) });
+        ).ReturnsAsync(new List<Note> { new Note( 1, "1asdas", "asdasdasad", null ) });
            
             
         var actual = await _service.GetList();
         
         actual.Should().NotBeNull();
     }
-    
+    //new List<NoteFile>()
     [Test]
     public async Task AddNoteAsync_Should_ReturnNote_When_Add_Notes()
     {
