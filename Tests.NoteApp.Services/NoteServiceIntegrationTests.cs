@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data;
+using NoteApp.Infrastructure.Data.DbRepository;
 using NoteApp.Infrastructure.Data.Interfaces;
 using NoteApp.Services.Models;
 using NoteApp.Services.Services;
@@ -28,16 +29,16 @@ public class NoteRepositoryStub : INoteRepository
         throw new NotImplementedException();
     }
 
-    public async Task<List<Note>> UpdateAsync(Note note)
+    public Task<List<Note>> UpdateAsync(Note note)
     {
         throw new NotImplementedException();
         
     }    
        
 
-    public async Task<Note?> DeleteAsync(int id)
+    public Task<Note> DeleteAsync(int id)
     {
-        return new Note(1, "adwwd", "awdawd", new List<NoteFile>());
+        return Task.FromResult(new Note(1, "adwwd", "awdawd", new List<NoteFile>()));
     }
 }
 
@@ -48,11 +49,6 @@ public class NoteServiceTests
     private Mock<INoteRepository> _repositoryMock;
 
 
-    public NoteServiceTests(NoteService service, Mock<INoteRepository> repositoryMock)
-    {
-        _service = service;
-        _repositoryMock = repositoryMock;
-    }
 
     [SetUp]
     public void Setup()
@@ -125,12 +121,9 @@ public class NoteServiceTests
     
 }
 
-/// <summary>
-/// /////////////////////////////////////////////////////////////////////////////////////////////////
-/// </summary>
 
 
-/*[NonParallelizable]
+[NonParallelizable]
 public class NoteServiceIntegrationTests
 {
     private NoteService _service;
@@ -241,4 +234,4 @@ public class NoteServiceIntegrationTests
         }
 
     }
-}*/
+}

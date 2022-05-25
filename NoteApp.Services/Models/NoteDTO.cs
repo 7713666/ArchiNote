@@ -14,9 +14,15 @@ public class NoteDto
         Body = body;
         Files = files;
     }
+    
+    public NoteDto(int id, string? head, string? body)
+    {
+        Id = id;
+        Head = head;
+        Body = body;
+    }
 
     public NoteDto()
     {
-        throw new NotImplementedException();
     }
 }

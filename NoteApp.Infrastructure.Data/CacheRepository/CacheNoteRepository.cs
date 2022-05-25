@@ -25,7 +25,7 @@ public class CacheNoteRepository : INoteRepository
         throw new NotImplementedException();
     }
 
-    public Task<Note?> DeleteAsync(int id)
+    public Task<Note> DeleteAsync(int id)
     {
         throw new NotImplementedException();
     }

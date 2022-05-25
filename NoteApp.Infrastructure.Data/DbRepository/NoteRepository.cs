@@ -2,8 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using NoteApp.Domain.Core;
 using NoteApp.Infrastructure.Data.Interfaces;
 
-
-namespace NoteApp.Infrastructure.Data
+namespace NoteApp.Infrastructure.Data.DbRepository
 {
     public class NoteRepository : INoteRepository
     {
@@ -59,7 +58,7 @@ namespace NoteApp.Infrastructure.Data
         }
 
         // DELETE api/users/5
-        public async Task<Note?> DeleteAsync(int id)
+        public async Task<Note> DeleteAsync(int id)
         {
             var note = await db.Notes
                 .Include(x => x.Files)
