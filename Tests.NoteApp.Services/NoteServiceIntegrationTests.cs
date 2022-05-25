@@ -13,7 +13,7 @@ namespace Tests.NoteApp.Services;
 
 public class NoteRepositoryStub : INoteRepository
 {
-    public Task<IEnumerable<Note>> GetAsync()
+    public Task<IEnumerable<Note>> GetListAsync()
     {
         throw new NotImplementedException();
     }
@@ -48,6 +48,12 @@ public class NoteServiceTests
     private Mock<INoteRepository> _repositoryMock;
 
 
+    public NoteServiceTests(NoteService service, Mock<INoteRepository> repositoryMock)
+    {
+        _service = service;
+        _repositoryMock = repositoryMock;
+    }
+
     [SetUp]
     public void Setup()
     {
@@ -66,42 +72,7 @@ public class NoteServiceTests
         actual.Should().NotBeNull();
         
     }
-    
-    [Test]
-    public async Task DeleteNoteAsync_Should_ReturnNote_When_NoFilesProvided()
-    {
-        _repositoryMock.Setup(x => x.DeleteAsync(It.IsAny<int>()))
-            .ReturnsAsync(new Note(1, "adwwd", "awdawd", new List<NoteFile>()));
-        
-        var actual = await _service.DeleteNoteAsync(1);
 
-        actual.Files.Should().BeEmpty();
-    }
-    
-    [Test]
-    public async Task DeleteNoteAsync_Should_ReturnNote_When_HasFiles()
-    {
-        var note = new Note(1, "adwwd", "awdawd", new List<NoteFile>()
-        {
-            new NoteFile(1, "awdawd", "awdaw", null),
-            new NoteFile(2, "xvxc", "xcvcx", null),
-        });
-
-        _repositoryMock.Setup(x => x.DeleteAsync(It.IsAny<int>()))
-            .ReturnsAsync(note);
-        
-        var actual = await _service.DeleteNoteAsync(1);
-        
-        _repositoryMock.Verify(x=>x.DeleteAsync(1), Times.Once);
-        actual.Files.Should().HaveCount(2)
-            .And.Satisfy(
-                x => x.Id == 1, 
-                x => x.Id == 2);
-        Assert.That(actual.Files.Count, Is.EqualTo(2));
-    }
-    
-    
-    
     [Test]
     public async Task GetNoteAsync_Should_ReturnNote_When_GetCalled_By_Id()
     {
@@ -114,18 +85,44 @@ public class NoteServiceTests
 
     }    
     
-    [Test]
     
+    [Test]
     public async Task GetNoteAsync_Should_ReturnNote_When_Get_All_List()
     {
-        _repositoryMock.Setup(m => m.GetAsync(It.IsAny<IEnumerable<Note>>()))
-            .Returns(() => new List <Note>());
+        _repositoryMock.Setup(
+            r => r.GetListAsync()
+        ).ReturnsAsync(new List<Note> { new Note( 1, "1asdas", "asdasdasad", new List<NoteFile>()) });
            
             
-        var actual = await _service.GetNoteAsync(1);
+        var actual = await _service.GetList();
         
         actual.Should().NotBeNull();
     }
+    
+    [Test]
+    public async Task AddNoteAsync_Should_ReturnNote_When_Add_Notes()
+    {
+            _repositoryMock.Setup(x => x.AddAsync(It.IsAny<Note>())
+                );
+
+           await _service.AddNoteAsync(new NoteDto(1, "1asdas", "asdasdasad", new List<FileDTO>()));
+        
+        _repositoryMock.Verify(x=>x.AddAsync(It.Is<Note>(c=>c.Body != null && c.Head != null)), Times.Once);
+    }
+    
+    [Test]
+    public async Task UpdateNoteAsync_Should_ReturnNote_When_Update_Notes()
+    {
+        _repositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Note>())
+        );
+
+        await _service.UpdateNoteAsync(new NoteDto(1, "1asdas", "asdasdasad", new List<FileDTO>()));
+        
+        _repositoryMock.Verify(x=>x.UpdateAsync(It.Is<Note>(c=>c.Body != null && c.Head != null)), Times.Once);
+    }
+
+    
+    
 }
 
 /// <summary>

@@ -26,7 +26,7 @@ public class ArchiNoteController : ApiController
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Note>>> Get()
     {
-        var notes = await _noteRepository.GetAsync();
+        var notes = await _noteRepository.GetListAsync();
         var result = notes.Select(note => new NoteViewModel()
         {
             Id = note.Id,

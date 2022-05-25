@@ -22,7 +22,14 @@ namespace NoteApp.Infrastructure.Data
             //     db.SaveChanges();
             // }
         }
-        
+
+        public async Task<IEnumerable<Note>> GetListAsync()
+        {
+            return await db.Notes
+                .Include(x => x.Files)
+                .ToListAsync();
+        }
+
         public async Task<Note> GetAsync(int id)
         {
             var result = await db.Notes
@@ -30,17 +37,7 @@ namespace NoteApp.Infrastructure.Data
                 .FirstOrDefaultAsync(x=> x.Id == id);
             return result;
         }
-        
-        public async Task<IEnumerable<Note>> GetAsync()
-        {
-            return await db.Notes
-                .Include(x => x.Files)
-                .ToListAsync();
-        }
-
-        // GET api/users/5
- 
-
+      
         // POST api/users
         public async Task<List<Note>> AddAsync(Note note)
         {

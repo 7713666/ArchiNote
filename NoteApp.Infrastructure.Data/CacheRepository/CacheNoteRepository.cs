@@ -5,7 +5,7 @@ namespace NoteApp.Infrastructure.Data;
 
 public class CacheNoteRepository : INoteRepository
 {
-    public Task<IEnumerable<Note>> GetAsync()
+    public Task<IEnumerable<Note>> GetListAsync()
     {
         throw new NotImplementedException();
     }

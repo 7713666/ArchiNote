@@ -32,6 +32,23 @@ public class NoteService : INoteService
         };
     }
 
+    public async Task<List<NoteDto>> GetList()
+    {
+        var notes = await _noteRepository.GetListAsync();
+        var result = notes.Select(note => new NoteDto()
+        {
+            Id = note.Id,
+            Head = note.Head,
+            Body = note.Body,
+            Files = note.Files.Select(file => new FileDTO()
+            {
+                Id = file.Id,
+                FileDir = file.FileDir,
+                FileName = file.FileName
+            }).ToList()
+        }).ToList();
+        return result;
+    }
     public async Task AddNoteAsync(NoteDto note)
     {
         var files = note.Files.Select(file => new NoteFile()
@@ -71,6 +88,6 @@ public class NoteService : INoteService
             }).ToList()
         };
     }
-
+   
 
 }
